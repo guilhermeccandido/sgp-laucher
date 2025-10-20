@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net;">
+    <title>SGP Launcher</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <style>
+        body { background-color: #f8f9fa; padding: 20px; }
+        .logs-container {
+            background-color: #212529;
+            color: #f8f9fa;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            height: 450px;
+            overflow-y: scroll;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .card-header { font-weight: bold; }
+        .initial-instructions {
+            color: #adb5bd;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body class="container-fluid">
+
+    <header class="d-flex justify-content-between align-items-center mb-4">
+        <h3><i class="bi bi-rocket-takeoff-fill"></i> SGP Launcher</h3>
+        <span class="badge bg-secondary" id="status-badge">Aguardando</span>
+    </header>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-terminal-fill"></i> Logs de Atividade
+                </div>
+                <div class="card-body">
+                    <div class="logs-container" id="logs-container">
+                        <div class="initial-instructions">
+                            <h5 class="text-white">Bem-vindo ao SGP Launcher!</h5>
+                            <p>Esta ferramenta automatiza a execução e atualização do SGP.</p>
+                            <hr>
+                            <h6>Como utilizar:</h6>
+                            <ul>
+                                <li>
+                                    <strong><i class="bi bi-gear-fill"></i> Configurações:</strong> Se for o primeiro uso, clique em "Configurações" e preencha todos os campos (URL, Caminho do app.exe e Token ). Salve as alterações.
+                                </li>
+                                <li>
+                                    <strong><i class="bi bi-arrow-down-circle-fill"></i> Verificar Atualização:</strong> Use este botão para baixar a versão mais recente do SGP ou para instalar pela primeira vez. Ele irá parar, atualizar e reiniciar o serviço automaticamente.
+                                </li>
+                                <li>
+                                    <strong><i class="bi bi-play-fill"></i> Iniciar SGP:</strong> Inicia o serviço do SGP com a configuração atual (não verifica por atualizações).
+                                </li>
+                                <li>
+                                    <strong><i class="bi bi-stop-fill"></i> Parar SGP:</strong> Encerra o serviço do SGP que está em execução.
+                                </li>
+                            </ul>
+                            <small>As atividades e resultados de cada ação aparecerão aqui neste painel de logs.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header"><i class="bi bi-joystick"></i> Controles</div>
+                <div class="card-body d-grid gap-2">
+                    <button class="btn btn-primary btn-lg" id="start-btn"><i class="bi bi-play-fill"></i> Iniciar SGP</button>
+                    <button class="btn btn-danger" id="stop-btn"><i class="bi bi-stop-fill"></i> Parar SGP</button>
+                    <button class="btn btn-info" id="update-btn"><i class="bi bi-arrow-down-circle-fill"></i> Verificar Atualização</button>
+                    <button class="btn btn-secondary" id="settings-btn" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                        <i class="bi bi-gear-fill"></i> Configurações
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Configurações do Launcher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="remote-url-input" class="form-label">URL do config.json (Repositório Privado)</label>
+                        <input type="text" class="form-control" id="remote-url-input" placeholder="https://raw.githubusercontent.com/usuario/repo/main/config.json">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exe-path-input" class="form-label">Caminho do app.exe (Destino )</label>
+                        <input type="text" class="form-control" id="exe-path-input" placeholder="S:/prd/app/main/app.exe">
+                    </div>
+                    <div class="mb-3">
+                        <label for="github-token-input" class="form-label">Token do GitHub (Personal Access Token)</label>
+                        <input type="password" class="form-control" id="github-token-input" placeholder="ghp_************************************">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="save-settings-btn">Salvar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./renderer.js"></script>
+</body>
+</html>
